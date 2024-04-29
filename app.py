@@ -115,27 +115,45 @@ def tournament_selection(pop, limit1, limit2):
 
 # %%
 def crossover(p_1, p_2, dish_num):
-    child = [0] * len(p_1)
-    ones_count = 0
 
-    # Perform uniform crossover with equal probability of selecting from either parent
+    child_1 = [0] * len(p_1)
+    child_2 = [0] * len(p_1)
+    ones_count_1 = 0
+    ones_count_2 = 0
+
+
     for i in range(len(p_1)):
-        child[i] = p_1[i] if random.random() < 0.5 else p_2[i]
-        ones_count += child[i]
+        if random.random() < 0.5:
+            child_1[i] = p_1[i]
+            child_2[i] = p_2[i]
+        else:
+            child_1[i] = p_2[i]
+            child_2[i] = p_1[i]
 
-    # Adjust the number of '1's in the child to be exactly five
-    while ones_count > dish_num:
-        # Find a random index where child[i] == 1 and set it to 0
-        idx = random.choice([j for j in range(len(child)) if child[j] == 1])
-        child[idx] = 0
-        ones_count -= 1
-    while ones_count < dish_num:
-        # Find a random index where child[i] == 0 and set it to 1
-        idx = random.choice([j for j in range(len(child)) if child[j] == 0])
-        child[idx] = 1
-        ones_count += 1
+        ones_count_1 += child_1[i]
+        ones_count_2 += child_2[i]
 
-    return child
+
+    while ones_count_1 > dish_num:
+        idx = random.choice([j for j in range(len(child_1)) if child_1[j] == 1])
+        child_1[idx] = 0
+        ones_count_1 -= 1
+    while ones_count_1 < dish_num:
+        idx = random.choice([j for j in range(len(child_1)) if child_1[j] == 0])
+        child_1[idx] = 1
+        ones_count_1 += 1
+
+
+    while ones_count_2 > dish_num:
+        idx = random.choice([j for j in range(len(child_2)) if child_2[j] == 1])
+        child_2[idx] = 0
+        ones_count_2 -= 1
+    while ones_count_2 < dish_num:
+        idx = random.choice([j for j in range(len(child_2)) if child_2[j] == 0])
+        child_2[idx] = 1
+        ones_count_2 += 1
+
+    return child_1, child_2
 
 
 # %%
@@ -161,17 +179,18 @@ def mutation(chromosome):
 
 
 # %%
-def create_generation(pop, mut_rate, limit1, limit2, dish_num):
+def create_generation(pop, mut_rate, limit1 , limit2  ,dish_num):
     new_gen = []
-    for i in range(0, len(pop)):
-        parent_1 = tournament_selection(pop, limit1, limit2)
-        parent_2 = tournament_selection(pop, limit1, limit2)
-        child = crossover(parent_1, parent_2, dish_num)
+    for i in range(0, int(len(pop)*0.5)):
+        parent_1 = tournament_selection(pop , limit1 , limit2)
+        parent_2 = tournament_selection(pop , limit1 , limit2)
+        child1,child2 = crossover(parent_1, parent_2, dish_num)
 
         if random.random() < mut_rate:
-            child = mutation(child)
+            child1 = mutation(child1)
 
-        new_gen.append(child)
+        new_gen.append(child1)
+        new_gen.append(child2)
     return new_gen
 
 
