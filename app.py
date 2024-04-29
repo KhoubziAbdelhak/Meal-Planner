@@ -223,7 +223,6 @@ def index():
         meal_count = int(request.form['mealCount'])
         calories = float(request.form['calories'])
         protein = float(request.form['protein'])
-        print('the output is', meal_count, calories, protein)
 
         df = meal_planner(pop_size=100, g_size=100, mut_rate=0.01, item_list=item_list,
                           test1=calories, test2=protein, dish_num=meal_count * 2)

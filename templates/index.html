@@ -107,22 +107,21 @@
                                                 target="_blank">View Recipe</a></div>
                                 {% endif %}
                             </td>
-                            <td><strongh>
-                                {{ (meals[i].calories + (meals[i+1].calories if meals[i+1] else 0)) | round(2)}}<i/strongh>
-                                calories<br>
-                                <strong>
-                                    {{ (meals[i].protein + (meals[i+1].protein if meals[i+1] else 0)) | round(2)}}g</strong>
-                                protein
+                            <td>
+                                <strongh>
+                                    {{ (meals[i].calories + (meals[i+1].calories if meals[i+1] else 0)) | round(2)}}<i/strongh>
+                                    calories<br>
+                                    <strong>
+                                        {{ (meals[i].protein + (meals[i+1].protein if meals[i+1] else 0)) | round(2)}}g</strong>
+                                    protein
                             </td>
                         </tr>
                     {% endfor %}
                     </tbody>
                 </table>
-{#                <p class="lead mt-2 mb-2">This meal plan provides a total of <strong>{{ total_calories | round(2) }}#}
-{#                    calories</strong> and <strong>{{ total_protein | round(2) }} grams of protein</strong>.</p>#}
                 <div class="alert alert-info" role="alert">
-                    This meal plan provides a total of <strong>{{ total_calories | round(2)}}
-                    calories</strong> and <strong>{{ total_protein | round(2)}} grams of protein</strong>.
+                    This meal plan provides a total of <strong>{{ total_calories }}
+                    calories</strong> and <strong>{{ total_protein }} grams of protein</strong>.
                 </div>
             </div>
         </div>
