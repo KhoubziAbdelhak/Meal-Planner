@@ -248,7 +248,9 @@ def index():
 
         if df is not None:
             total_calories = sum(df.to_dict()['calories'].values())
+            total_calories = round(total_calories, 2)
             total_protein = sum(df.to_dict()['protein'].values())
+            total_protein = round(total_protein, 2)
             for i in df.to_dict()['calories'].values():
                 round(i, 2)
 
